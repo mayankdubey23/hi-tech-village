@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 
 // ✅ UPDATED: Extreme Memory-Saving Mode for Render Free Tier
 const client = new Client({
-    authStrategy: new LocalAuth(),
+    authStrategy: new LocalAuth({ clientId: 'form-bot' }),
     puppeteer: {
         args: [
             '--no-sandbox',
