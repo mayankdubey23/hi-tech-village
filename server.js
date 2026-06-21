@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// ✅ UPDATED: Extreme Memory-Saving Mode for Render Free Tier
+// ✅ UPDATED: Removed webVersionCache to fix "sendIq" error, kept memory-saving args
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: 'form-bot' }),
     puppeteer: {
@@ -31,10 +31,6 @@ const client = new Client({
             '--disable-extensions',
             '--memory-pressure-off'
         ]
-    },
-    webVersionCache: {
-        type: 'remote',
-        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html'
     }
 });
 
@@ -115,4 +111,12 @@ app.post('/send-whatsapp', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
+});
+
+// 🛡️ CRASH SHIELDS: Catch unhandled background errors so the server doesn't crash (Prevents 502 errors)
+process.on('unhandledRejection', error => {
+    console.error('Unhandled Rejection Details:', error);
+});
+process.on('uncaughtException', error => {
+    console.error('Uncaught Exception Details:', error);
 });
