@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// ✅ UPDATED: Complete Puppeteer arguments for Render deployment
+// ✅ UPDATED: Added webVersionCache to fix the sendIq error
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -27,6 +27,10 @@ const client = new Client({
             '--no-zygote',
             '--disable-gpu'
         ]
+    },
+    webVersionCache: {
+        type: 'remote',
+        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html'
     }
 });
 
