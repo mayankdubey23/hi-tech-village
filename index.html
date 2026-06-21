@@ -375,9 +375,16 @@
                     body: JSON.stringify(formData)
                 });
 
-                const result = await response.json();
+                let result = {};
+                const text = await response.text();
+                try {
+                    result = text ? JSON.parse(text) : {};
+                } catch (parseErr) {
+                    console.warn('Server returned non-JSON or empty response:', parseErr, text);
+                }
+
                 if (!response.ok || !result.success) {
-                    throw new Error(result.error || 'Failed to send WhatsApp messages.');
+                    throw new Error((result && result.error) || 'Failed to send WhatsApp messages.');
                 }
 
                 successMessage.textContent = 'Registration confirmed. You will receive a WhatsApp confirmation shortly.';
