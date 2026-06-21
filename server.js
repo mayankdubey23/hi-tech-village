@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
@@ -53,7 +54,7 @@ app.post('/send-whatsapp', async (req, res) => {
             `*Reference Name:* ${data.reference}\n` +
             `━━━━━━━━━━━━━━━━━━━━━━`;
 
-        const adminNumber = '919310575003';
+        const adminNumber = process.env.ADMIN_PHONE || '919310575003';
         const adminJid = await client.getNumberId(adminNumber);
 
         if (adminJid) {
