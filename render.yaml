@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: hi-tech-village-form
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
