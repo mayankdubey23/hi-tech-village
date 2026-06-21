@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// ✅ UPDATED: Added webVersionCache to fix the sendIq error
+// ✅ UPDATED: Extreme Memory-Saving Mode for Render Free Tier
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -25,7 +25,11 @@ const client = new Client({
             '--disable-accelerated-2d-canvas',
             '--no-first-run',
             '--no-zygote',
-            '--disable-gpu'
+            '--disable-gpu',
+            '--disable-software-rasterizer',
+            '--mute-audio',
+            '--disable-extensions',
+            '--memory-pressure-off'
         ]
     },
     webVersionCache: {
